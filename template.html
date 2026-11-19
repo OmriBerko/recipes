@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>מה מבשלים</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="מה מבשלים">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#f7f1e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍲</text></svg>">
+<style>
+:root {
+  --bg: #f7f1e8; --card: #fffdf9; --ink: #2b241c; --muted: #7a6d5e;
+  --line: #e7dccb; --accent: #c2541b; --accent-soft: #f6e0d2;
+  --tried: #2f7a4a; --tried-soft: #dcefe2;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1915; --card: #26221d; --ink: #f1e9dd; --muted: #a8998a;
+    --line: #3a342c; --accent: #f08a4b; --accent-soft: #3d2a1d;
+    --tried: #7fcf98; --tried-soft: #1f3528;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1915; --card: #26221d; --ink: #f1e9dd; --muted: #a8998a;
+  --line: #3a342c; --accent: #f08a4b; --accent-soft: #3d2a1d;
+  --tried: #7fcf98; --tried-soft: #1f3528;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 17px/1.6 -apple-system, "Segoe UI", "Rubik", "Arial Hebrew", Arial, sans-serif;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+a { color: var(--accent); }
+.wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+header {
+  position: sticky; top: 0; z-index: 5; background: var(--bg);
+  padding: calc(env(safe-area-inset-top) + 14px) 0 10px; border-bottom: 1px solid var(--line);
+}
+h1 { font-size: 26px; margin: 0 0 10px; letter-spacing: -.3px; }
+h1 small { font-size: 14px; color: var(--muted); font-weight: 400; margin-inline-start: 6px; }
+input[type=search] {
+  width: 100%; font: inherit; padding: 11px 14px; border-radius: 12px;
+  border: 1px solid var(--line); background: var(--card); color: var(--ink);
+}
+.chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 0 2px; scrollbar-width: none; }
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  flex: none; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  font: inherit; font-size: 14px; padding: 5px 12px; border-radius: 999px; cursor: pointer;
+}
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.list { list-style: none; padding: 12px 0 40px; margin: 0; display: grid; gap: 10px; }
+.card {
+  display: flex; gap: 12px; align-items: center; text-decoration: none; color: inherit;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px;
+}
+.card .emoji { font-size: 30px; line-height: 1; }
+.card .title { font-weight: 600; line-height: 1.3; }
+.meta { color: var(--muted); font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 2px; }
+.badge { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--tried-soft); color: var(--tried); font-weight: 600; }
+.badge.new { background: var(--accent-soft); color: var(--accent); }
+.empty { color: var(--muted); text-align: center; padding: 40px 0; }
+
+/* recipe page */
+.recipe { padding: 8px 0 60px; }
+.bar { display: flex; gap: 8px; align-items: center; padding: calc(env(safe-area-inset-top) + 10px) 0 6px; }
+.btn {
+  font: inherit; font-size: 15px; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  padding: 7px 12px; border-radius: 10px; cursor: pointer; text-decoration: none;
+}
+.btn[aria-pressed="true"] { background: var(--tried); color: #fff; border-color: var(--tried); }
+.spacer { flex: 1; }
+.recipe h1 { font-size: 28px; line-height: 1.25; margin: 10px 0 6px; }
+.recipe .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 4px; }
+.recipe .tags span { font-size: 13px; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; }
+.recipe h2 { font-size: 21px; margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--accent-soft); }
+.recipe h3 { font-size: 16px; margin: 16px 0 4px; color: var(--accent); }
+.recipe ul, .recipe ol { padding-inline-start: 22px; margin: 6px 0; }
+.recipe li { margin: 4px 0; }
+.recipe ol li { margin: 10px 0; padding-inline-start: 4px; }
+.recipe ol li::marker { color: var(--accent); font-weight: 700; }
+ul.ingredients { list-style: none; padding: 0; }
+ul.ingredients li {
+  padding: 8px 10px; margin: 0; border-bottom: 1px solid var(--line); cursor: pointer;
+  display: flex; gap: 10px; align-items: flex-start; -webkit-tap-highlight-color: transparent;
+}
+ul.ingredients li::before {
+  content: ""; flex: none; width: 18px; height: 18px; margin-top: 4px;
+  border: 2px solid var(--line); border-radius: 5px;
+}
+ul.ingredients li.done { color: var(--muted); text-decoration: line-through; }
+ul.ingredients li.done::before { background: var(--tried); border-color: var(--tried); }
+table { border-collapse: collapse; width: 100%; font-size: 15px; margin: 12px 0; }
+th, td { border: 1px solid var(--line); padding: 6px 8px; text-align: start; }
+th { background: var(--accent-soft); }
+.source { color: var(--muted); font-size: 14px; margin-top: 28px; word-break: break-all; }
+.hint { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<div id="app" class="wrap"></div>
+<script>
+const RECIPES = /*__RECIPES__*/[];
+const app = document.getElementById("app");
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+const state = { q: "", tag: store.get("tag", "הכול") };
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+const FILTERS = ["הכול", "ניסינו ואהבנו", "חדש לנסות", "לילדים", "למבוגרים", "עוף", "בשר", "דגים", "צמחוני", "פתיתים", "פסטה", "מרק", "תוספת", "מהיר", "סיר אחד", "תנור", "נינג׳ה", "קינוח"];
+
+function matches(r) {
+  const t = state.tag;
+  if (t === "ניסינו ואהבנו" && r.status !== "tried") return false;
+  if (t === "חדש לנסות" && r.status === "tried") return false;
+  if (!["הכול", "ניסינו ואהבנו", "חדש לנסות"].includes(t) && !r.tags.includes(t)) return false;
+  if (!state.q) return true;
+  const hay = (r.title + " " + r.tags.join(" ") + " " + r.text).toLowerCase();
+  return state.q.toLowerCase().split(/\s+/).every(w => hay.includes(w));
+}
+
+function renderList() {
+  document.title = "מה מבשלים";
+  const tried = RECIPES.filter(r => r.status === "tried").length;
+  app.innerHTML = `
+    <header>
+      <h1>מה מבשלים <small>${RECIPES.length} מתכונים · ${tried} ניסינו</small></h1>
+      <input type="search" id="q" placeholder="חיפוש: פתיתים, אפונה, נינג׳ה…" value="${esc(state.q)}" autocomplete="off">
+      <div class="chips">${FILTERS.map(f => `<button class="chip" aria-pressed="${f === state.tag}" data-tag="${f}">${f}</button>`).join("")}</div>
+    </header>
+    <ul class="list" id="list"></ul>`;
+  const q = document.getElementById("q");
+  q.addEventListener("input", () => { state.q = q.value.trim(); fill(); });
+  app.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+    state.tag = b.dataset.tag; store.set("tag", state.tag);
+    app.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+    fill();
+  }));
+  fill();
+}
+
+function fill() {
+  const items = RECIPES.filter(matches);
+  document.getElementById("list").innerHTML = items.length ? items.map(r => `
+    <li><a class="card" href="#/${r.id}">
+      <span class="emoji">${r.emoji}</span>
+      <span>
+        <div class="title">${esc(r.title)}</div>
+        <div class="meta">
+          <span class="badge ${r.status === "tried" ? "" : "new"}">${r.status === "tried" ? "ניסינו ✓" : "חדש"}</span>
+          ${r.time ? `<span>⏱ ${esc(r.time)}</span>` : ""}
+          ${r.servings ? `<span>🍽 ${esc(r.servings)}</span>` : ""}
+        </div>
+      </span>
+    </a></li>`).join("") : `<li class="empty">לא נמצאו מתכונים</li>`;
+}
+
+let wakeLock = null;
+async function toggleWake(btn) {
+  try {
+    if (wakeLock) { await wakeLock.release(); wakeLock = null; }
+    else { wakeLock = await navigator.wakeLock.request("screen"); wakeLock.addEventListener("release", () => { wakeLock = null; btn.setAttribute("aria-pressed", "false"); }); }
+    btn.setAttribute("aria-pressed", String(!!wakeLock));
+  } catch { btn.textContent = "לא נתמך"; }
+}
+
+function renderRecipe(r) {
+  document.title = r.title;
+  window.scrollTo(0, 0);
+  const checked = store.get("chk:" + r.id, []);
+  app.innerHTML = `
+    <div class="recipe">
+      <div class="bar">
+        <a class="btn" href="#/">→ כל המתכונים</a>
+        <span class="spacer"></span>
+        ${"wakeLock" in navigator ? `<button class="btn" id="wake" aria-pressed="false">☀️ מסך דלוק</button>` : ""}
+        <button class="btn" id="share">שיתוף</button>
+      </div>
+      <h1>${r.emoji} ${esc(r.title)}</h1>
+      <div class="meta">
+        <span class="badge ${r.status === "tried" ? "" : "new"}">${r.status === "tried" ? "ניסינו ✓" : "חדש לנסות"}</span>
+        ${r.time ? `<span>⏱ ${esc(r.time)}</span>` : ""}
+        ${r.servings ? `<span>🍽 ${esc(r.servings)}</span>` : ""}
+      </div>
+      <div class="tags">${r.tags.map(t => `<span>${esc(t)}</span>`).join("")}</div>
+      ${r.html}
+      ${r.source ? `<p class="source">מקור: <a href="${esc(r.source)}" target="_blank" rel="noopener">${esc(new URL(r.source).hostname.replace(/^www\./, ""))}</a></p>` : ""}
+      <p class="hint">טיפ: אפשר לסמן מצרכים שכבר הוצאתם בלחיצה.</p>
+    </div>`;
+  app.querySelectorAll("ul.ingredients li").forEach((li, i) => {
+    if (checked.includes(i)) li.classList.add("done");
+    li.addEventListener("click", () => {
+      li.classList.toggle("done");
+      const now = [...app.querySelectorAll("ul.ingredients li")].flatMap((x, j) => x.classList.contains("done") ? [j] : []);
+      store.set("chk:" + r.id, now);
+    });
+  });
+  const wake = document.getElementById("wake");
+  if (wake) wake.addEventListener("click", () => toggleWake(wake));
+  document.getElementById("share").addEventListener("click", async () => {
+    const url = location.href;
+    if (navigator.share) { try { await navigator.share({ title: r.title, url }); } catch {} }
+    else { try { await navigator.clipboard.writeText(url); document.getElementById("share").textContent = "הקישור הועתק"; } catch {} }
+  });
+}
+
+function route() {
+  if (wakeLock) { wakeLock.release(); wakeLock = null; }
+  const id = decodeURIComponent(location.hash.replace(/^#\/?/, ""));
+  const r = RECIPES.find(x => x.id === id);
+  r ? renderRecipe(r) : renderList();
+}
+addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
